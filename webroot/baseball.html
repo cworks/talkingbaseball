@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="js/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="js/jquery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxdatetimeinput.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxgrid.selection.js"></script> 
+    <script type="text/javascript" src="js/jqwidgets/jqxgrid.columnsresize.js"></script> 
+    <script type="text/javascript" src="js/jqwidgets/jqxgrid.export.js"></script> 
+    <script type="text/javascript" src="js/jqwidgets/jqxgrid.sort.js"></script> 
+    <script type="text/javascript" src="js/jqwidgets/jqxgrid.filter.js"></script> 
+    <script type="text/javascript" src="js/jqwidgets/jqxgrid.pager.js"></script> 
+    <script type="text/javascript" src="js/jqwidgets/jqxdata.js"></script> 
+    <script type="text/javascript" src="js/jqwidgets/jqxdata.export.js"></script> 
+    <script type="text/javascript" src="js/jqwidgets/globalization/jquery.global.js"></script> 
+</head>
+<body class='default'>
+    <div id='jqxWidget' style="width: 100%; font-size: 13px; font-family: Verdana; float: left;">
+        <div id="jqxgrid"></div>
+        <div style='margin-top: 20px;'>
+            <div style='float: left;'>
+                <input type="button" value="Remove Filters" id="clearFilter" />
+                <input type="button" value="Autosize Columns" id="autosizeColumns" />
+                <input type="button" value="Export to Excel" id='excelExport' />
+                <input type="button" value="Export to XML" id='xmlExport' />
+                <input type="button" value="Export to CSV" id='csvExport' />
+                <input type="button" value="Export to TSV" id='tsvExport' />
+                <input type="button" value="Export to HTML" id='htmlExport' />
+                <input type="button" value="Export to JSON" id='jsonExport' />
+                <input type="button" value="Export to PDF" id='pdfExport' />
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var theme = "";
+
+        var source = {
+            url: 'data/lahman/Sample.csv',                    
+            datatype: 'csv',
+            datafields: [
+                { name: 'lahmanID', type: 'number' },
+                { name: 'playerID', type: 'string' },
+                { name: 'managerID', type: 'string' },
+                { name: 'hofID', type: 'string' },
+                { name: 'birthYear', type: 'number' },
+                { name: 'birthMonth', type: 'number' },
+                { name: 'birthDay', type: 'number' },
+                { name: 'birthCountry', type: 'string' },
+                { name: 'birthState', type: 'string' },
+                { name: 'birthCity', type: 'string' },
+                { name: 'deathYear', type: 'number' },
+                { name: 'deathMonth', type: 'number' },
+                { name: 'deathDay', type: 'number' },
+                { name: 'deathCountry', type: 'string' },
+                { name: 'deathState', type: 'string' },
+                { name: 'deathCity', type: 'string' },
+                { name: 'nameFirst', type: 'string' },
+                { name: 'nameLast', type: 'string' },
+                { name: 'nameNote', type: 'string' },
+                { name: 'nameGiven', type: 'string' },
+                { name: 'nameNick', type: 'string' },
+                { name: 'weight', type: 'number' },
+                { name: 'height', type: 'number' },
+                { name: 'bats', type: 'string' },
+                { name: 'throws', type: 'string' },
+                { name: 'debut', type: 'date' },
+                { name: 'finalGame', type: 'date' },
+                { name: 'college', type: 'string' },
+                { name: 'lahman40ID', type: 'string' },
+                { name: 'lahman45ID', type: 'string' },
+                { name: 'retroID', type: 'string' },
+                { name: 'holtzID', type: 'string' },
+                { name: 'bbrefID', type: 'string' }
+            ]
+        };
+
+        var dataAdapter = new $.jqx.dataAdapter(source);
+
+        // initialize jqxGrid
+        $("#jqxgrid").jqxGrid({
+            width: '100%',
+            height: 700,
+            source: dataAdapter,
+            theme: theme,
+            altrows: true,
+            sortable: true,
+            pageable: true,
+            pagesize: 50,
+            pagesizeoptions: [ '50', '100', '500', '1000', '2000', '5000', '10000', 'all' ],
+            showfilterrow: true,
+            filterable: true,
+            selectionmode: 'multiplecellsextended',
+            columns: [
+                { text: 'Lahman ID', datafield: 'lahmanID', width: 90 },
+                { text: 'Player ID', datafield: 'playerID', width: 90 },
+                { text: 'Manager ID', datafield: 'managerID', width: 90 },
+                { text: 'Hof ID', datafield: 'hofID', width: 90 },
+                { text: 'Birth Year', datafield: 'birthYear', width: 90 },
+                { text: 'Birth Month', datafield: 'birthMonth', width: 90 },
+                { text: 'Birth Day', datafield: 'birthDay', width: 90 },
+                { text: 'Birth Country', datafield: 'birthCountry', width: 90 },
+                { text: 'Birth State', datafield: 'birthState', width: 90 },
+                { text: 'Birth City', datafield: 'birthCity', width: 90 },
+                { text: 'Death Year', datafield: 'deathYear', width: 90 },
+                { text: 'Death Month', datafield: 'deathMonth', width: 90 },
+                { text: 'Death Day', datafield: 'deathDay', width: 90 },
+                { text: 'Death Country', datafield: 'deathCountry', width: 90 },
+                { text: 'Death State', datafield: 'deathState', width: 90 },
+                { text: 'Death City', datafield: 'deathCity', width: 90 },
+                { text: 'First Name', datafield: 'nameFirst', width: 90 },
+                { text: 'Last Name', datafield: 'nameLast', width: 90 },
+                { text: 'Name Note', datafield: 'nameNote', width: 90 },
+                { text: 'Given Name', datafield: 'nameGiven', width: 90 },
+                { text: 'Nick Name', datafield: 'nameNick', width: 90 },
+                { text: 'Weight', datafield: 'weight', width: 90 },
+                { text: 'Height', datafield: 'height', width: 90 },
+                { text: 'Bats', datafield: 'bats', width: 90 },
+                { text: 'Throws', datafield: 'throws', width: 90 },
+                { text: 'Debut', datafield: 'debut', width: 90, cellsformat: 'd', filtertype: 'date' },
+                { text: 'Final Game', datafield: 'finalGame', width: 90, cellsformat: 'd', filtertype: 'date' },
+                { text: 'College', datafield: 'college', width: 90 },
+                { text: 'Lahman 40 ID', datafield: 'lahman40ID', width: 90 },
+                { text: 'Lahman 45 ID', datafield: 'lahman45ID', width: 90 },
+                { text: 'Retro ID', datafield: 'retroID', width: 90 },
+                { text: 'Holtz ID', datafield: 'holtzID', width: 90 },
+                { text: 'BB Ref ID', datafield: 'bbrefID', width: 90 }
+            ]
+        });
+
+        $("#clearFilter").jqxButton({ theme: theme });
+        $('#autosizeColumns').jqxButton({ theme: theme });
+        $("#xmlExport").jqxButton({ theme: theme });
+        $("#excelExport").jqxButton({ theme: theme });
+        $("#xmlExport").jqxButton({ theme: theme });
+        $("#csvExport").jqxButton({ theme: theme });
+        $("#tsvExport").jqxButton({ theme: theme });
+        $("#htmlExport").jqxButton({ theme: theme });
+        $("#jsonExport").jqxButton({ theme: theme });
+        $("#pdfExport").jqxButton({ theme: theme });
+
+        $("#excelExport").click(function () {
+            var xlsdata = $("#jqxgrid").jqxGrid('exportdata', 'xls');           
+        });
+        $("#xmlExport").click(function () {
+            var xmldata = $("#jqxgrid").jqxGrid('exportdata', 'xml');
+        });
+        $("#csvExport").click(function () {
+            var csvdata = $("#jqxgrid").jqxGrid('exportdata', 'csv');
+        });
+        $("#tsvExport").click(function () {
+            var tsvdata = $("#jqxgrid").jqxGrid('exportdata', 'tsv');
+        });
+        $("#htmlExport").click(function () {
+            var htmldata = $("#jqxgrid").jqxGrid('exportdata', 'html');
+        });
+        $("#jsonExport").click(function () {
+            var jsondata = $("#jqxgrid").jqxGrid('exportdata', 'json');
+        });
+        $("#pdfExport").click(function () {
+            var pdfdata = $("#jqxgrid").jqxGrid('exportdata', 'pdf');
+        });
+        $('#clearFilter').click(function () {
+            $("#jqxgrid").jqxGrid('clearfilters');
+        });
+        $('#autosizeColumns').click(function () {
+            $("#jqxgrid").jqxGrid('autoresizecolumns');
+        });
+
+    });
+    </script>
+</body>
+</html>
